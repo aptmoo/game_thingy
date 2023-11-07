@@ -1,40 +1,40 @@
 project "Engine"
-    -- Project config
-    kind "ConsoleApp"
-    language "C"
-    cdialect "C17"
+    -- Language
+    language "C++"
+    cppdialect "C++17"
 
     -- Output
+    kind        "ConsoleApp"
     targetdir   "%{wks.location}/bin/"
     objdir      "%{wks.location}/bin-int/"
 
-    -- Input
-    files 
+    files
     {
-        "src/**.h",
-        "src/**.c"
-    }
-
-    includedirs
-    {
-        "src/"
+        "src/**.h", "src/**.cpp"
     }
 
     links
     {
-        "GLFW",
-        
+        "glfw",
+        "raylib",
+        "GL"
     }
 
-    -- Platform specific
+    includedirs
+    {
+        "./",
+        "src/",
+
+        "%{wks.location}/Dependencies/raylib-cpp/include/",
+        "%{wks.location}/Dependencies/entt/",
+    }
+
+    -- Platform
     filter "system:linux"
         libdirs { "/usr/lib/", "%{wks.location}/lib/" }
         links { "m", "dl", "pthread" }
         defines { "PLATFORM_LINUX" }
-
-    filter "system:windows"
-        libdirs { "%{wks.location}/lib/" }
-
+    
     -- Configs
     filter "configurations:Debug"
         defines { "DEBUG" }
