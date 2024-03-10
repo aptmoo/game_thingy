@@ -33,6 +33,11 @@ project "Client"
     {
     }
 
+    -- ref api
+    filter { "options:refapi=gl" }
+        links { "GLFW" }
+        defines { "REFAPI_DEFINED", "REFAPI_GL" }
+
     filter "system:windows"
         systemversion "latest"
         defines { "PLATFORM_WINDOWS" }

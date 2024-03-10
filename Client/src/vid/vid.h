@@ -4,14 +4,17 @@
 typedef struct
 {
     int width, height;
-    int fullscreen;
-} viddesc_t;
+} vidmode_t;
 
-void VID_Init(viddesc_t desc);
+void VID_Init(void);
 void VID_Shutdown(void);
 
-void VID_SetSize(int width, int height);
+void VID_Update();
 
-void VID_SetFullscreen(int fullscreen);
+void VID_SetMode(vidmode_t mode);
+vidmode_t VID_GetMode(void);
+vidmode_t VID_GetPrimaryMode(void);
+
+void VID_SetFullscreen(int enable);
 
 #endif
