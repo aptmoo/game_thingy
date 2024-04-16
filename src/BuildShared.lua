@@ -1,18 +1,20 @@
-project "GLFW"
+project "Shared"
     kind "StaticLib"
     language "C"
+    cdialect "C17"
     staticruntime "off"
+
+    targetdir ("%{wks.location}/lib/")
+    objdir ("%{wks.location}/bin-int/%{prj.name}")
 
     files 
     {
-        "glfw/src/**.c", "glfw/src/**.h",
-        "glfw/include/**.h"
+        "./shared/**.h", "./shared/**.c",
     }
 
     includedirs
     {
-        "./",
-        "glfw/include/",
+        "./shared/"
     }
 
     links
@@ -25,16 +27,13 @@ project "GLFW"
         
     }
 
-    targetdir ("%{wks.location}/lib/")
-    objdir ("%{wks.location}/Intermediates/%{prj.name}")
-
     filter "system:windows"
         systemversion "latest"
-        defines { "_GLFW_WIN32" }
+        defines { }
 
     filter "system:linux"
-        defines { "_GLFW_X11" }
-        libdirs { "/usr/lib", }
+        defines { }
+        libdirs { "/usr/lib", "%{wks.location}/lib/" }
         links { "dl", "m", "pthread" }
 
     filter "configurations:Debug"

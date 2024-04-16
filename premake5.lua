@@ -15,8 +15,8 @@ newoption
 
 group "Dependencies"
     filter { "options:refapi=gl"}
-        include "Dependencies/buildGlfw.lua"
+        include "ext/buildGlfw.lua"
 group ""
 
-include "Shared"
-include "Client"
+include "src/BuildApp.lua"
+include "src/BuildShared.lua"

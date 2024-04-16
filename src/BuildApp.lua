@@ -1,43 +1,48 @@
-project "Shared"
-    kind "StaticLib"
+project "App"
+    kind "ConsoleApp"
     language "C"
     cdialect "C17"
     staticruntime "off"
 
-    targetdir ("%{wks.location}/lib/")
+    targetdir ("%{wks.location}/bin/")
     objdir ("%{wks.location}/bin-int/%{prj.name}")
 
-    files
+    files 
     {
-        "src/**.h", "src/**.c"
+        "./app/**.h", "./app/**.c",
+        "./platform/**.h",
     }
+
+    filter "system:windows"
+        files { "./platform/windows/**.c" }
+
+    filter "system:linux"
+        files { "./platform/nix/**.c" }
 
     includedirs
     {
-        "src/"
-    }
-
-    libdirs
-    {
-        
+        "./",
+        "./app/"
     }
 
     links
     {
+        "Shared"
     }
 
     defines
     {
+        
     }
 
     filter "system:windows"
         systemversion "latest"
-        defines { "PLATFORM_WINDOWS" }
+        defines { }
 
     filter "system:linux"
-        defines { "PLATFORM_LINUX" }
-        libdirs { "/usr/lib", "../lib", }
-        links { "dl", "m", "pthread", }
+        defines {  }
+        libdirs { "/usr/lib", "%{wks.location}/lib/" }
+        links { "dl", "m", "pthread" }
 
     filter "configurations:Debug"
         defines { "DEBUG" }
