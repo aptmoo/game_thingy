@@ -20,6 +20,24 @@ cvar_t* CVAR_AllocateVar(void)
     return s_Cvars;
 }
 
+cvar_t* CVAR_CreateVar(char* name, char* value, cvarType_t type)
+{
+    cvar_t* var = CVAR_FindVar(name);
+    if(!var)
+        var = CVAR_AllocateVar();
+
+    /* Not checking for null. Would be rather silly to pass null here anyways */
+    var->name = STR_CopyString(name);
+
+    /* Value being null makes some sense i guess */
+    if(value)
+        var->data = STR_CopyString(value);
+    else
+        var->data = STR_CopyString("");
+    
+    var->type = type;
+}
+
 cvar_t* CVAR_FindVar(char* name)
 {
     cvar_t* var;
@@ -36,6 +54,8 @@ cvar_t* CVAR_FindVar(char* name)
             return var;
         }
     }
+
+    return NULL;
 }
 
 void CVAR_SetByPtr(cvar_t* var, char* value, cvarType_t type)

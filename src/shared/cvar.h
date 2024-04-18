@@ -28,12 +28,12 @@ typedef struct cvar_s
 cvar_t* CVAR_AllocateVar(void);
 
 /**
- * @brief IdTech style get/set func.
+ * @brief Create var?
  * 
  * @param name 
  * @return cvar_t* 
  */
-cvar_t* CVAR_GetVar(char* name, char* value, cvarType_t type);
+cvar_t* CVAR_CreateVar(char* name, char* value, cvarType_t type);
 
 /**
  * @brief Returns a var with "name" or null.
